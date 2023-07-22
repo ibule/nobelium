@@ -45,7 +45,7 @@ export default function Header({ navBarTitle, fullWidth }) {
     !fallback && dark ? "/favicon.dark.png" : "/favicon.png";
   const [favicon, _setFavicon] = useState(resolveFavicon());
   const setFavicon = (fallback) => _setFavicon(resolveFavicon(fallback));
-
+  console.log("favicon", favicon);
   useEffect(
     () => setFavicon(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
