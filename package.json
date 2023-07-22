@@ -13,9 +13,9 @@
     "url": "http://craigary.net"
   },
   "scripts": {
-    "dev": "next dev -p 3200",
+    "dev": "next dev -p 3002",
     "build": "next build",
-    "start": "next start -p 3301 ",
+    "start": "next start ",
     "lint": "next lint",
     "postbuild": "next-sitemap --config next-sitemap.config.js"
   },
