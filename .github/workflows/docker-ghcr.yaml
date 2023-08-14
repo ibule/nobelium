@@ -10,7 +10,7 @@ on:
     branches: [main]
 
 env:
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: nobelium
   DOCKER_HUB_NAMESPACE: ibule
   REGISTRY: ghcr.io
 
@@ -47,6 +47,4 @@ jobs:
           context: .
           push: true
           tags: |
-            ibule/${{env.IMAGE_NAME}}:${{env.FORMATTED_TIME}},
-            ibule/${{env.IMAGE_NAME}}:latest,
             ${{env.REGISTRY}}/ibule/${{env.IMAGE_NAME}}:${{env.FORMATTED_TIME}}
