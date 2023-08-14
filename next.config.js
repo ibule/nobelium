@@ -1,6 +1,9 @@
 module.exports = {
+  env: {
+    NOTION_PAGE_ID: "1e20ca1651c84daaaa610c66a0e3a37f",
+  },
   images: {
-    domains: ['gravatar.com']
+    domains: ["gravatar.com"],
   },
   eslint: {
     // dirs: ['components', 'layouts', 'lib', 'pages']
@@ -8,17 +11,17 @@ module.exports = {
   async headers() {
     return [
       {
-        source: '/:path*{/}?',
+        source: "/:path*{/}?",
         headers: [
           {
-            key: 'Permissions-Policy',
-            value: 'interest-cohort=()'
-          }
-        ]
-      }
-    ]
+            key: "Permissions-Policy",
+            value: "interest-cohort=()",
+          },
+        ],
+      },
+    ];
   },
-  transpilePackages: ['dayjs']
+  transpilePackages: ["dayjs"],
   // webpack: (config, { dev, isServer }) => {
   //   // Replace React with Preact only in client production build
   //   if (!dev && !isServer) {
@@ -30,4 +33,4 @@ module.exports = {
   //   }
   //   return config
   // }
-}
+};

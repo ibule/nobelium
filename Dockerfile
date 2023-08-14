@@ -1,11 +1,11 @@
-# ARG NOTION_PAGE_ID =
+#ARG NOTION_PAGE_ID =1e20ca1651c84daaaa610c66a0e3a37f
 # Install dependencies only when needed
 FROM node:20.4.0-alpine3.18 AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json  ./
-RUN (yarn config set registry https://registry.npm.taobao.org) && (yarn install)
+RUN yarn install
 
 # Rebuild the source code only when needed
 FROM node:20.4.0-alpine3.18 AS builder
@@ -13,7 +13,7 @@ ARG NOTION_PAGE_ID
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
-RUN (yarn config set registry https://registry.npm.taobao.org) &&  (yarn build)
+RUN  yarn build
 
 ENV NODE_ENV production
 
