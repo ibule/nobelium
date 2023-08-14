@@ -14,12 +14,14 @@ const Footer = ({ fullWidth }) => {
     >
       <hr className="border-gray-200 dark:border-gray-600" />
       <div className="my-4 text-sm leading-6">
-        <div className="flex align-baseline justify-between flex-wrap">
+        <div className="flex align-baseline justify-center flex-wrap">
           <p>
-            {BLOG.icp}
             {/* © {BLOG.author} {from === y || !from ? y : `${from} - ${y}`} */}
+            <a href="https://beian.miit.gov.cn/" target="_blank">
+              {BLOG.icp}
+            </a>
           </p>
-          <Vercel />
+          {/* <Vercel /> */}
         </div>
       </div>
     </div>

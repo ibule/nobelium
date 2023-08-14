@@ -1,11 +1,11 @@
 const BLOG = {
-  title: "个人生活的分享",
+  title: "ibule",
   author: "ibule",
   email: "taotaohu3.14@qq.com",
   link: "https://nobelium.vercel.app",
-  icp: "粤ICP备19140539号-1",
-  description: "This gonna be an awesome website.",
-  lang: "en-US", // ['en-US', 'zh-CN', 'zh-HK', 'zh-TW', 'ja-JP', 'es-ES']
+  icp: "粤ICP备19140539号",
+  description: "这是一个很棒的网站",
+  lang: "zh-CN", // ['en-US', 'zh-CN', 'zh-HK', 'zh-TW', 'ja-JP', 'es-ES']
   timezone: "Asia/Shanghai", // Your Notion posts' date will be interpreted as this timezone. See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for all options.
   appearance: "auto", // ['light', 'dark', 'auto'],
   font: "sans-serif", // ['sans-serif', 'serif']
@@ -14,7 +14,7 @@ const BLOG = {
   path: "", // leave this empty unless you want to deploy Nobelium in a folder
   since: 2023, // If leave this empty, current year will be used.
   postsPerPage: 7,
-  sortByDate: false,
+  sortByDate: true,
   showAbout: true,
   showArchive: true,
   autoCollapsedNavBar: false, // The automatically collapsed navigation bar
