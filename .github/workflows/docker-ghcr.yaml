@@ -47,5 +47,5 @@ jobs:
           push: true
           tags: |
             ghcr.io/ibule/${{env.IMAGE_NAME}}:$FORMATTED_TIME
-            ibule/${{env.IMAGE_NAME}}:${{ steps.formatted_time.outputs.formatted_time }}
+            ibule/${{env.IMAGE_NAME}}:$FORMATTED_TIME
             ibule/${{env.IMAGE_NAME}}:latest
