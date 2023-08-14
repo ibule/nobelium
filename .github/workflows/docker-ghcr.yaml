@@ -47,6 +47,6 @@ jobs:
           context: .
           push: true
           tags: |
-            ibule/${{env.IMAGE_NAME}}:${{env.FORMATTED_TIME}}
-            ibule/${{env.IMAGE_NAME}}:latest
+            ibule/${{env.IMAGE_NAME}}:${{env.FORMATTED_TIME}},
+            ibule/${{env.IMAGE_NAME}}:latest,
             ${{env.REGISTRY}}/ibule/${{env.IMAGE_NAME}}:${{env.FORMATTED_TIME}}
