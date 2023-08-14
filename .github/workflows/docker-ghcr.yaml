@@ -1,5 +1,4 @@
 name: Docker ghcr.io
-
 on:
   push:
     branches: [main]
@@ -46,4 +45,5 @@ jobs:
           tags: |
             ibule/${{ env.IMAGE_NAME }}:${{ env.FORMATTED_TIME }}
             ibule/${{ env.IMAGE_NAME }}:latest
+            ${{ env.REGISTRY }}/ibule/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY }}/ibule/${{ env.IMAGE_NAME }}:${{ env.FORMATTED_TIME }}
