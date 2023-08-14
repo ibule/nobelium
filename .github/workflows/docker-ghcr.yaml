@@ -36,17 +36,16 @@ jobs:
       - name: Get and Format Current Time
         id: formatted_time
         run: |
-          echo "::set-output name=formatted_time::$(date +'%Y_%m_%d_%H_%M')"
+          echo "FORMATTED_TIME=$(date +'%Y-%m-%d-%H-%M')" >> $GITHUB_ENV
 
-      # Build and push Docker image with Buildx (don't push on PR)
-      # https://github.com/docker/build-push-action
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
           build-args: |
             NOTION_PAGE_ID=${{secrets.NOTION_PAGE_ID}}
           context: .
+          push: true
           tags: |
-            ghcr.io/ibule/${{env.IMAGE_NAME}}:${{ steps.formatted_time.outputs.formatted_time }}
+            ghcr.io/ibule/${{env.IMAGE_NAME}}:$FORMATTED_TIME
             ibule/${{env.IMAGE_NAME}}:${{ steps.formatted_time.outputs.formatted_time }}
             ibule/${{env.IMAGE_NAME}}:latest
