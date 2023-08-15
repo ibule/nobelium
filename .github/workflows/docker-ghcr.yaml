@@ -9,11 +9,26 @@ env:
   REGISTRY: ghcr.io
 
 jobs:
-  docker-build-and-push:
+  get-current-time:
     runs-on: ubuntu-latest
     env:
       TZ: Asia/Shanghai
     steps:
+      - name: Get and Format Current Time
+        id: formatted_time
+        run: |
+          echo "FORMATTED_TIME=$(date +'%Y-%m-%d-%H-%M')" >> $GITHUB_ENV
+          echo current time: ${ env.FORMATTED_TIME } worldflow number :$GITHUB_RUN_NUMBER
+  push-dockerhub:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Shanghai
+    steps:
+      - name: Get and Format Current Time
+        id: formatted_time
+        run: |
+          echo "FORMATTED_TIME=$(date +'%Y-%m-%d-%H-%M')" >> $GITHUB_ENV
+          echo time: ${ env.FORMATTED_TIME } GITHUB_RUN_NUMBER:$GITHUB_RUN_NUMBER
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -22,19 +37,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Log into registry ghcr.io
-        uses: docker/login-action@v2
-        with:
-          registry: ${{env.REGISTRY}}
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Get and Format Current Time
-        id: formatted_time
-        run: |
-          echo "FORMATTED_TIME=$(date +'%Y-%m-%d-%H-%M')" >> $GITHUB_ENV
-          echo time: ${{ env.FORMATTED_TIME }} GITHUB_RUN_NUMBER: $GITHUB_RUN_NUMBER
-
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
@@ -45,5 +47,39 @@ jobs:
           tags: |
             ibule/${{ env.IMAGE_NAME }}:${{ env.FORMATTED_TIME }}
             ibule/${{ env.IMAGE_NAME }}:latest
+
+  push-GitHub:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Shanghai
+    steps:
+      - name: Get and Format Current Time
+        id: formatted_time
+        run: |
+          echo "FORMATTED_TIME=$(date +'%Y-%m-%d-%H-%M')" >> $GITHUB_ENV
+          echo time: ${ env.FORMATTED_TIME } GITHUB_RUN_NUMBER:$GITHUB_RUN_NUMBER
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log into registry ghcr.io
+        uses: docker/login-action@v2
+        with:
+          registry: ${{env.REGISTRY}}
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          build-args: |
+            NOTION_PAGE_ID=${{secrets.NOTION_PAGE_ID}}
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
             ${{ env.REGISTRY }}/ibule/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY }}/ibule/${{ env.IMAGE_NAME }}:${{ env.FORMATTED_TIME }}
