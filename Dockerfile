@@ -5,14 +5,14 @@ FROM node:20.4.0-alpine3.18 AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json  ./
-RUN npm install
+RUN yarn install
 
 # Rebuild the source code only when needed
 FROM node:20.4.0-alpine3.18 AS builder
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
-RUN  npm build
+RUN  yarn build
 ARG NOTION_PAGE_ID
 ENV NODE_ENV=production
 ENV NOTION_PAGE_ID=NOTION_PAGE_ID
