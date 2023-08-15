@@ -7,20 +7,28 @@ env:
   IMAGE_NAME: nobelium
   DOCKER_HUB_NAMESPACE: ibule
   REGISTRY: ghcr.io
+  TIME: $(date +'%Y-%m-%d-%H-%M')
 
 jobs:
   get-current-time:
     runs-on: ubuntu-latest
     env:
       TZ: Asia/Shanghai
+    outputs:
+      current-time: ${{ steps.formatted_time.outputs.FORMATTED_TIME }}
+      run_number: ${{ steps.workflow.outputs.run_number }}
     steps:
       - name: Get and Format Current Time
         id: formatted_time
         run: |
-          echo "FORMATTED_TIME=$(date +'%Y-%m-%d-%H-%M')" >> $GITHUB_ENV
-          echo "time: ${{ env.FORMATTED_TIME }} "
-          echo " GITHUB_RUN_NUMBER:${{github.run_number }}"
-          echo "github :${{toJson(github) }}"
+          echo "FORMATTED_TIME=$(date +'%Y-%m-%d-%H-%M')" >> $GITHUB_OUTPUT
+          echo "time: ${{ env.TIME }} "
+          echo "${{outputs.run_number}}"
+      - name: get github env
+        id: workflow
+        run: |
+          echo " run_number:${{github.run_number }} >> $GITHUB_OUTPUT"
+
   push-dockerhub:
     needs: get-current-time
     runs-on: ubuntu-latest
