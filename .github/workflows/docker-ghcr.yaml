@@ -10,6 +10,14 @@ env:
   TIME: $(date +'%Y-%m-%d-%H-%M')
 
 jobs:
+  get-current-date:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get current date and time
+        id: date
+        run: echo "current_date=$(date +'%Y-%m-%d-%H-%M')" >> "$GITHUB_OUTPUT"
+      - name: Use date output
+        run: echo ${{ steps.date.outputs.current_date }}
   push-dockerhub:
     runs-on: ubuntu-latest
     env:
