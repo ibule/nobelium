@@ -54,7 +54,7 @@ jobs:
         id: formatted_time
         run: |
           echo "FORMATTED_TIME=$(date +'%Y-%m-%d-%H-%M')" >> $GITHUB_ENV
-          echo time: ${ env.FORMATTED_TIME } GITHUB_RUN_NUMBER:$GITHUB_RUN_NUMBER
+          echo time: ${{ env.FORMATTED_TIME}} GITHUB_RUN_NUMBER:${{github.run_number}}
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Set up QEMU
