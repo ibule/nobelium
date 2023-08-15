@@ -5,6 +5,7 @@ FROM node:20.4.0-alpine3.18 AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json  ./
+RUN npm install -g yarn@3
 RUN yarn install --ignore-engines
 
 # Rebuild the source code only when needed
