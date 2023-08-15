@@ -46,7 +46,7 @@ jobs:
         env:
           test: ${{needs.get-current-time.outputs.run_number}}
         run: |
-          echo $test
+          echo "needs.get-current-time.outputs.run_number $test"
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
