@@ -42,7 +42,7 @@ jobs:
           context: .
           push: true
           tags: |
-            ibule/${{ env.IMAGE_NAME }}:${{ env.FORMATTED_TIME }}
+            ibule/${{ env.IMAGE_NAME }}:${{ steps.get-current-time.outputs.formatted_time }}
             ibule/${{ env.IMAGE_NAME }}:latest
 
   push-GitHub:
@@ -78,5 +78,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ${{ env.REGISTRY }}/ibule/${{ env.IMAGE_NAME }}:latest
-            ${{ env.REGISTRY }}/ibule/${{ env.IMAGE_NAME }}:${{ env.FORMATTED_TIME }}
+            ghcr.io/${{ github.repository }}:latest
+            ghcr.io/${{ github.repository}}:${{ env.FORMATTED_TIME }}
