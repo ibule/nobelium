@@ -71,7 +71,6 @@ jobs:
             NOTION_PAGE_ID=${{secrets.NOTION_PAGE_ID}}
           context: .
           platforms: linux/amd64,linux/arm64
-          provenance: false
           push: true
           tags: |
             ghcr.io/${{ github.repository }}:latest
