@@ -23,7 +23,7 @@ jobs:
         run: |
           echo "FORMATTED_TIME=$(date +'%Y-%m-%d-%H-%M')" >> $GITHUB_OUTPUT
           echo "time: ${{ env.TIME }} "
-          echo "${{outputs.run_number}}"
+          echo "$GITHUB_OUTPUT"
       - name: get github env
         id: workflow
         run: |
