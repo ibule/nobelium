@@ -27,7 +27,7 @@ jobs:
       - name: get github env
         id: workflow
         run: |
-          echo " run_number:${{github.run_number }} >> $GITHUB_OUTPUT"
+          echo "run_number=${{github.run_number }} >> $GITHUB_OUTPUT"
 
   push-dockerhub:
     needs: get-current-time
@@ -42,13 +42,11 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Get and Format Current Time
-        id: formatted_time
+      - name: get run_number
+        env:
+          test: ${{needs.get-current-time.outputs.run_number}}
         run: |
-          echo "FORMATTED_TIME=$(date +'%Y-%m-%d-%H-%M')" >> $GITHUB_ENV
-          echo "time: ${{ env.FORMATTED_TIME }} "
-          echo " GITHUB_RUN_NUMBER:${{github.run_number }}"
-          echo "github :${{toJson(github) }}"
+          echo $test
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
@@ -57,7 +55,7 @@ jobs:
           context: .
           push: true
           tags: |
-            ibule/${{ env.IMAGE_NAME }}:${{ env.FORMATTED_TIME}}
+            ibule/${{ env.IMAGE_NAME }}:${{ env.TIME}}
             ibule/${{ env.IMAGE_NAME }}:latest
 
   push-GitHub:
@@ -65,11 +63,6 @@ jobs:
     env:
       TZ: Asia/Shanghai
     steps:
-      - name: Get and Format Current Time
-        id: formatted_time
-        run: |
-          echo "FORMATTED_TIME=$(date +'%Y-%m-%d-%H-%M')" >> $GITHUB_ENV
-          echo time: ${{ env.FORMATTED_TIME}} GITHUB_RUN_NUMBER:${{github.run_number}}
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Set up QEMU
@@ -95,4 +88,4 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository}}:${{ env.FORMATTED_TIME }}
+            ghcr.io/${{ github.repository}}:${{ env.TIME }}
