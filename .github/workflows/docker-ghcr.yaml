@@ -92,6 +92,4 @@ jobs:
           password: ${{ secrets.TENCENT_PASSWORD }}
           port: 22
           script: |
-            whoami
-            docker ps
-            docker compose ls
+            cd ~ && sh deploy.sh ${{ github.repository_owner }} ${{ secrets.GITHUB_TOKEN }} #运行脚本
