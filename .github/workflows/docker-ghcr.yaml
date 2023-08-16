@@ -34,6 +34,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: get current date and time
+        run:  echo "current date: ${{CURRENT_DATE}}"
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
@@ -42,7 +44,7 @@ jobs:
           context: .
           push: true
           tags: |
-            ibule/${{ env.IMAGE_NAME }}:${{ env.CURRENT_DATE}}
+            ibule/${{ env.IMAGE_NAME }}:v1.0.${{ github.run_number }}
             ibule/${{ env.IMAGE_NAME }}:latest
 
   push-GitHub:
@@ -75,3 +77,14 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository }}:latest
             ghcr.io/${{ github.repository}}:v1.0.${{ github.run_number }}
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.TENCENT_USERNAME }}
+          password: ${{ secrets.TENCENT_PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            whoami
+            docker ps
+            docker compose ls
