@@ -80,9 +80,7 @@ jobs:
 
   deploy-tencent:
     runs-on: ubuntu-latest
-    needs: |
-      push-dockerhub
-      push-GitHub
+    needs: [push-dockerhub,push-GitHub]
     env:
       TZ: Asia/Shanghai
     steps:
