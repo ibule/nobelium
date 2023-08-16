@@ -35,7 +35,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: current date and time
-        run: echo "current date ${env.CURRENT_DATE}"
+        run: echo current date ${{needs.get-current-date.outputs.current_date}}
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
