@@ -5,7 +5,7 @@ FROM node:20 AS deps
 # RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json  ./
-RUN yarn install
+RUN yarn install --network-timeout=30000
 
 # Rebuild the source code only when needed
 FROM node:20 AS builder
