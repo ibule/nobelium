@@ -92,4 +92,4 @@ jobs:
           password: ${{ secrets.TENCENT_PASSWORD }}
           port: 22
           script: |
-            cd ~ && sh deploy.sh ${{ github.repository_owner }} ${{ secrets.GITHUB_TOKEN }} #运行脚本
+            cd ~ && sh deploy_by_github_action.sh ${{ github.repository_owner }} ${{ secrets.GITHUB_TOKEN }} #运行脚本
