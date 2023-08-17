@@ -7,7 +7,7 @@ env:
   IMAGE_NAME: nobelium
   DOCKER_HUB_NAMESPACE: ibule
   GITHUB_REGISTRY: ghcr.io
-  TENCENT_DOCKER_REGISTRY: ccr.ccs.tencentyun.com
+  TENCENT_DOCKER_REGISTRY: useccr.ccs.tencentyun.com
   TIME: $(date +'%Y-%m-%d-%H-%M')
 
 jobs:
@@ -108,8 +108,8 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ${{env.TENCENT_DOCKER_REGISTRY}}/ibule-private/${{ env.IMAGE_NAME }}:latest
-            ${{env.TENCENT_DOCKER_REGISTRY}}/ibule-private/${{ env.IMAGE_NAME }}:v1.0.${{ github.run_number }}
+            ${{env.TENCENT_DOCKER_REGISTRY}}/usa-public/${{ env.IMAGE_NAME }}:latest
+            ${{env.TENCENT_DOCKER_REGISTRY}}/usa-public/${{ env.IMAGE_NAME }}:v1.0.${{ github.run_number }}
   deploy-tencent:
     runs-on: ubuntu-latest
     needs: [push-tencent]
