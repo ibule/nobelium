@@ -111,7 +111,7 @@ jobs:
             ccr.ccs.tencentyun.com/ibule-private/${{ env.IMAGE_NAME }}:v1.0.${{ github.run_number }}
   deploy-tencent:
     runs-on: ubuntu-latest
-    # needs: [push-dockerhub, push-GitHub]
+    needs: [push-tencent]
     env:
       TZ: Asia/Shanghai
     steps:
@@ -120,7 +120,7 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.TENCENT_USERNAME }}
-          password: ${{ secrets.TENCENT_PASSWORD }}
+          key: ${{ secrets.TENCENT_ID_RSA }}
           port: 22
           script: |
             cd ~ && sh deploy_by_github_action.sh ${{ secrets.TENCENT_DOCKER_NAME}} ${{ secrets.TENCENT_DOCKER_PASSWORD }} #运行脚本
