@@ -92,8 +92,6 @@ jobs:
           registry: ${{env.TENCENT_DOCKER_REGISTRY}}
           username: ${{ secrets.TENCENT_DOCKER_NAME }}
           password: ${{ secrets.TENCENT_DOCKER_PASSWORD }}
-      - name: build and push to tencent registry
-        run: |
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
