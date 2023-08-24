@@ -16,7 +16,6 @@ env:
 jobs:
   push-dockerhub:
     runs-on: ubuntu-latest
-    needs: get-current-date
     env:
       TZ: Asia/Shanghai
     steps:
@@ -98,7 +97,7 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ${{env.ALIYUN_DOCKER_REGISTRY}}/${{env.ALIYUN_NAMESPACE}}//${{ env.IMAGE_NAME }}:latest
+            ${{env.ALIYUN_DOCKER_REGISTRY}}/${{env.ALIYUN_NAMESPACE}}/${{ env.IMAGE_NAME }}:latest
             ${{env.ALIYUN_DOCKER_REGISTRY}}/${{ env.ALIYUN_NAMESPACE }}/${{ env.IMAGE_NAME }}:v1.0.${{ github.run_number }}
 
   push-tencent:
@@ -138,13 +137,15 @@ jobs:
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.HOST }}
+          username: root
           key: ${{ secrets.TENCENT_ID_RSA }}
           port: 22
           script: |
             cd ~ && sh deploy_by_github_action.sh ${{ secrets.TENCENT_CLOUD_USERNAME}} ${{ secrets.TENCENT_CLOUD_PASSWORD }} #运行脚本
 
-  get-current-date:
+  public-version:
     runs-on: ubuntu-latest
+    needs: [push-GitHub, push-tencent, push-dockerhub]
     steps:
       - name: Get current date and time
         id: date
