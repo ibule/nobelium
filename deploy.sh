@@ -7,5 +7,5 @@ docker rm nobelium && docker rmi haomingkeji-docker.pkg.coding.net/zaixiankaoshi
 echo -e "---------docker Pull--------"
 docker pull haomingkeji-docker.pkg.coding.net/zaixiankaoshi/public/ibule/nobelium:latest
 echo -e "---------docker Create and Start--------"
-docker run --rm -d -p 8080:80 --name nobelium haomingkeji-docker.pkg.coding.net/zaixiankaoshi/public/ibule/nobelium:latest
+docker run --restart=always --rm -d -p 3000:3000 --name nobelium haomingkeji-docker.pkg.coding.net/zaixiankaoshi/public/ibule/nobelium:latest
 echo -e "---------deploy Success--------"
