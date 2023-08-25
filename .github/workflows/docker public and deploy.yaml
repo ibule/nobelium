@@ -136,7 +136,7 @@ jobs:
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.HOST }}
-          username: root
+          username: ibule
           key: ${{ secrets.TENCENT_ID_RSA }}
           port: 22
           script: |
