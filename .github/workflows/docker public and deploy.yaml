@@ -35,10 +35,6 @@ jobs:
           tags: |
             ibule/${{ env.IMAGE_NAME }}:v1.0.${{ github.run_number }}
             ibule/${{ env.IMAGE_NAME }}:latest
-      - name: echo current tags
-        run: |
-          echo "发布dockerhub镜像 :rocket:" >> $GITHUB_STEP_SUMMARY
-          echo ibule/${{ env.IMAGE_NAME }}:v1.0.${{ github.run_number }} >> $GITHUB_STEP_SUMMARY
 
   push-GitHub:
     runs-on: ubuntu-latest
