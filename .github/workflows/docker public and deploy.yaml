@@ -133,21 +133,44 @@ jobs:
       TZ: Asia/Shanghai
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@v1.0.0
+        uses: actions/checkout@v3
+      - name: Deploy to Staging server
+        uses: easingthemes/ssh-deploy@main
         with:
-          host: ${{ secrets.HOST }}
-          username: ibule
-          key: ${{ secrets.TENCENT_ID_RSA }}
-          port: 22
-          script: |
-            echo "$(<deploy.sh)" > ~/deploy_by_github_action.sh && sh deploy_by_github_action.sh ${{ secrets.TENCENT_CLOUD_USERNAME}} ${{ secrets.TENCENT_CLOUD_PASSWORD }} #运行脚本
+          SSH_PRIVATE_KEY: ${{ secrets.TENCENT_ID_RSA }}
+          ARGS: "-rlgoDzvc -i"
+          SOURCE: "deploy.sh"
+          REMOTE_HOST: ${{ secrets.HOST }}
+          REMOTE_USER: ibule
+          TARGET: "/home/ibule"
+          SCRIPT_BEFORE: |
+            whoami
+            ls -al
+          SCRIPT_AFTER: |
+            whoami
+            ls -al
+            echo $RSYNC_STDOUT
+            chmod +x ~/deploy.sh
+            sh deploy.sh ${{ secrets.TENCENT_CLOUD_USERNAME}} ${{ secrets.TENCENT_CLOUD_PASSWORD }} #运行脚本
             # 检查脚本执行的返回码
             if [ $? -ne 0 ]; then
               echo "脚本执行失败！"
               exit 1
             fi
+      # - name: executing remote ssh commands using password
+      #   uses: appleboy/ssh-action@v1.0.0
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     username: ibule
+      #     key: ${{ secrets.TENCENT_ID_RSA }}
+      #     port: 22
+      #     script: |
+      #       echo "$(<deploy.sh)" > ~/deploy_by_github_action.sh && sh deploy_by_github_action.sh ${{ secrets.TENCENT_CLOUD_USERNAME}} ${{ secrets.TENCENT_CLOUD_PASSWORD }} #运行脚本
+      #       # 检查脚本执行的返回码
+      #       if [ $? -ne 0 ]; then
+      #         echo "脚本执行失败！"
+      #         exit 1
+      #       fi
       - name: Get current date and time
         id: date
         run: echo "FORMATTED_TIME=$(date +'%Y-%m-%d %H:%M')" >> $GITHUB_ENV
