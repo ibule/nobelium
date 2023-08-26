@@ -138,7 +138,7 @@ jobs:
           SOURCE: "deploy.sh"
           REMOTE_HOST: ${{ secrets.HOST }}
           REMOTE_USER: ibule
-          TARGET: "/home/ibule"
+          TARGET: "/home/ibule/script"
           SCRIPT_BEFORE: |
             whoami
             ls -al
@@ -146,8 +146,8 @@ jobs:
             whoami
             ls -al
             echo $RSYNC_STDOUT
-            chmod +x ~/deploy.sh
-            sh deploy.sh ${{ secrets.TENCENT_CLOUD_USERNAME}} ${{ secrets.TENCENT_CLOUD_PASSWORD }} #运行脚本
+            chmod +x ~/script/deploy.sh
+            sh ~/script/deploy.sh ${{ secrets.TENCENT_CLOUD_USERNAME}} ${{ secrets.TENCENT_CLOUD_PASSWORD }} #运行脚本
             # 检查脚本执行的返回码
             if [ $? -ne 0 ]; then
               echo "脚本执行失败！"
