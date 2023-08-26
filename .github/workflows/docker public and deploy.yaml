@@ -140,8 +140,12 @@ jobs:
           key: ${{ secrets.TENCENT_ID_RSA }}
           port: 22
           script: |
-            cd ~ && sh deploy_by_github_action.sh ${{ secrets.TENCENT_CLOUD_USERNAME}} ${{ secrets.TENCENT_CLOUD_PASSWORD }} #运行脚本
-
+            cd ~ && echo "$(<deploy.sh)" > ~/deploy_by_github_action.sh && sh deploy_by_github_action.sh ${{ secrets.TENCENT_CLOUD_USERNAME}} ${{ secrets.TENCENT_CLOUD_PASSWORD }} #运行脚本
+            # 检查脚本执行的返回码
+            if [ $? -ne 0 ]; then
+              echo "脚本执行失败！"
+              exit 1
+            fi
       - name: Get current date and time
         id: date
         run: echo "FORMATTED_TIME=$(date +'%Y-%m-%d %H:%M')" >> $GITHUB_ENV
