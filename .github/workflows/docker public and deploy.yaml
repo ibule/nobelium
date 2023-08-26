@@ -132,6 +132,8 @@ jobs:
     env:
       TZ: Asia/Shanghai
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -140,7 +142,7 @@ jobs:
           key: ${{ secrets.TENCENT_ID_RSA }}
           port: 22
           script: |
-            cd ~ && echo "$(<deploy.sh)" > ~/deploy_by_github_action.sh && sh deploy_by_github_action.sh ${{ secrets.TENCENT_CLOUD_USERNAME}} ${{ secrets.TENCENT_CLOUD_PASSWORD }} #运行脚本
+            echo "$(<deploy.sh)" > ~/deploy_by_github_action.sh && sh deploy_by_github_action.sh ${{ secrets.TENCENT_CLOUD_USERNAME}} ${{ secrets.TENCENT_CLOUD_PASSWORD }} #运行脚本
             # 检查脚本执行的返回码
             if [ $? -ne 0 ]; then
               echo "脚本执行失败！"
